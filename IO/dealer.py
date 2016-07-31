@@ -8,28 +8,19 @@ from twisted.internet import reactor
 class DealerServer(protocol.ProcessProtocol):
   def __init__(self):
     self.id = randint(1, 10000)
-    self.state = { 'ready': False
-                 , 'moves': [] }
+    self.state = { 'moves': [] }
   def connectionMade(self):
     pprint.pprint('connectionMade')
+    self.transport.write(b'u\n')
   def childDataReceived(self, fd, x): 
     self.state['moves'].append((fd, x))
-    if not self.state['ready'] and x == b'GO\n':
-      pprint.pprint('Got go!')
-      self.state['ready'] = True
-      self.transport.write(b'u\n')
-    else:
-      pprint.pprint('Atari!')
-      self.transport.write(b'd\n')
-    pprint.pprint(self.state)
+    self.transport.write(b'd\n')
   def childConnectionLost(self, fd):
-    pprint.pprint(str(fd) + ' stalo ploho')
+    pprint.pprint(fd)
   def proecssExited(self, reason):
-    pprint.pprint('stalo sovsem ploho: ')
     pprint.pprint(reason)
   def processEnded(self, reason):
-    pprint.pprint('RIP.')
-    pprint.pprint(reason)
+    pprint.pprint(self.state)
 
 def main():
   dealerServer = DealerServer()

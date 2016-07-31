@@ -75,7 +75,6 @@ def run_game(strategy, player_num):
     got = []
     for player in range(1, player_num):
       dump('... now waiting for player ' + str(player), some_seed)
-      stdout.writelines('GO\n')
       got.append(parse(stdin.readline()))
 
     tba = ()
@@ -83,8 +82,9 @@ def run_game(strategy, player_num):
       tba = pick_strategy(strategy)(move)
     my_moves += 1
     dump('... now making a move:', some_seed)
-    dump(tba, some_seed)
-    stdout.writelines(format(tba))
+    dump(format(tba), some_seed)
+    stdout.write(format(tba))
+    stdout.flush()
 
 def main():
   parser = argparse.ArgumentParser(description='Three player pipes demo')
