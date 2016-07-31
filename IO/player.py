@@ -2,6 +2,7 @@
 
 import argparse
 import pprint
+from random import randint
 from enum import Enum, unique
 from sys import stdin, stdout
 
@@ -18,6 +19,10 @@ def parse(x):
 
 def format(x):
   return x.value + '\n'
+
+def dump(x, y=666):
+  with open('/tmp/python-log' + str(y), 'a') as f:
+    f.write(x + '\n')
 
 def strategy_a(move):
   if   move == Move.up:
@@ -58,20 +63,27 @@ def pick_strategy(x):
     return strategy_c
 
 def run_game(strategy, player_num):
+  huyesh = randint(1, 10000)
+  dump('Starting a game with strategy ' + strategy + '!', huyesh)
   my_moves = 0
   while(my_moves < 10):
+    dump('Waiting to make a move', huyesh)
     # Pondering ( https://chessprogramming.wikispaces.com/Pondering ) is up to player implementation
     # this demo doesn't show how to do pondering in python. In fact, most likely it's not even needed,
     # see https://icfpc-tbd.slack.com/archives/general/p1469908998000046
 
     got = []
     for player in range(1, player_num):
+      dump('... now waiting for player ' + str(player), huyesh)
+      stdout.writelines('GO\n')
       got.append(parse(stdin.readline()))
 
     tba = ()
     for move in got:
       tba = pick_strategy(strategy)(move)
     my_moves += 1
+    dump('... now making a move:', huyesh)
+    dump(tba, huyesh)
     stdout.writelines(format(tba))
 
 def main():
