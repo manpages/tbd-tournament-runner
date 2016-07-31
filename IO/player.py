@@ -63,18 +63,18 @@ def pick_strategy(x):
     return strategy_c
 
 def run_game(strategy, player_num):
-  huyesh = randint(1, 10000)
-  dump('Starting a game with strategy ' + strategy + '!', huyesh)
+  some_seed = randint(1, 10000)
+  dump('Starting a game with strategy ' + strategy + '!', some_seed)
   my_moves = 0
   while(my_moves < 10):
-    dump('Waiting to make a move', huyesh)
+    dump('Waiting to make a move', some_seed)
     # Pondering ( https://chessprogramming.wikispaces.com/Pondering ) is up to player implementation
     # this demo doesn't show how to do pondering in python. In fact, most likely it's not even needed,
     # see https://icfpc-tbd.slack.com/archives/general/p1469908998000046
 
     got = []
     for player in range(1, player_num):
-      dump('... now waiting for player ' + str(player), huyesh)
+      dump('... now waiting for player ' + str(player), some_seed)
       stdout.writelines('GO\n')
       got.append(parse(stdin.readline()))
 
@@ -82,8 +82,8 @@ def run_game(strategy, player_num):
     for move in got:
       tba = pick_strategy(strategy)(move)
     my_moves += 1
-    dump('... now making a move:', huyesh)
-    dump(tba, huyesh)
+    dump('... now making a move:', some_seed)
+    dump(tba, some_seed)
     stdout.writelines(format(tba))
 
 def main():

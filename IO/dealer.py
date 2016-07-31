@@ -23,9 +23,9 @@ class DealerServer(protocol.ProcessProtocol):
       self.transport.write(b'd\n')
     pprint.pprint(self.state)
   def childConnectionLost(self, fd):
-    pprint.pprint(str(fd) + ' stalo huyoovo')
+    pprint.pprint(str(fd) + ' stalo ploho')
   def proecssExited(self, reason):
-    pprint.pprint('stalo sovsem huyoovo: ')
+    pprint.pprint('stalo sovsem ploho: ')
     pprint.pprint(reason)
   def processEnded(self, reason):
     pprint.pprint('RIP.')
