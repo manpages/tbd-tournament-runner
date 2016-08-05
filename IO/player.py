@@ -65,6 +65,18 @@ def pick_strategy(x):
 def run_game(strategy, player_num):
   some_seed = randint(1, 10000)
   dump('Starting a game with strategy ' + strategy + '!', some_seed)
+
+  if strategy == 'a':
+    dump('Making a move as "a"', some_seed)
+    stdout.write(format(Move.up))
+    stdout.flush()
+
+  if strategy == 'b':
+    parse(stdin.readline())
+    dump('Making a move as "b"', some_seed)
+    stdout.write(format(Move.down))
+    stdout.flush()
+
   my_moves = 0
   while(my_moves < 10):
     dump('Waiting to make a move', some_seed)

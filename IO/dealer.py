@@ -9,8 +9,10 @@ class DealerServer(protocol.ProcessProtocol):
     self.moves = []
     self.subscriptions = []
   def connectionMade(self):
+    pprint.pprint("Connected!")
     return
   def childDataReceived(self, fd, x): 
+    pprint.pprint("Got move:" + str(x))
     self.moves.append(x)
     for ds in self.subscriptions:
       ds.send(x)
@@ -38,9 +40,10 @@ def main():
   strat = '`'
   for dsk in dealerServers:
     strat = cpp(strat)
+    pprint.pprint("Spawning process with strategy " + strat)
     reactor.spawnProcess(dsk,                       # :: ProcessProtocol
                          'player.py',               # :: Executable
-                         ['A', '-n 3', cpp(strat)], # :: Args
+                         ['A', '-n 3', strat],      # :: Args
                          childFDs={0: 'w',          # :: Map FD Perm
                                    1: 'r',
                                    2: 'r'})
